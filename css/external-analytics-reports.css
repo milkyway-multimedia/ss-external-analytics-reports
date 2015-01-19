@@ -1,0 +1,124 @@
+#ss-ga-report--authenticator {
+    padding:0.5%;
+    margin:0.6%;
+    background-color: #F79940;
+    border-radius: 2px;
+    margin-bottom:10px;
+    color:#fff;
+    font-weight: bold;
+}
+
+#ss-ga-report--authenticator:hover {
+    background-color: #FF9D23;
+}
+
+#ss-ga-report--authenticator .gapi-analytics-auth-styles-signinbutton {
+    display:block;
+    cursor:pointer;
+    width: auto;
+}
+
+#ss-ga-report--view-selector {
+    border-radius: 2px;
+    background-color: rgba(0,0,0,0.05);
+    padding:0.5%;
+    margin:0.6%;
+}
+
+#ss-ga-report--view-selector > table {
+    width: 33% !important;
+    height: auto !important;
+    display: block;
+    float: left;
+}
+
+#ss-ga-report--view-selector > table:first-child {
+    margin-left:0;
+}
+
+#ss-ga-report--view-selector > table:last-child {
+    margin-right:0;
+}
+
+#ss-ga-report--view-selector > table tr td:first-child {
+    padding:2px 5px;
+}
+
+#ss-ga-report--view-selector tbody,
+#ss-ga-report--view-selector tr,
+#ss-ga-report--view-selector td {
+    display: block;
+    width: auto !important;
+}
+
+.ss-ga-report--metrics h3,
+.ss-ga-report--charts h3 {
+    clear: both;
+}
+
+.ss-ga-report--metric,
+.ss-ga-report--chart {
+    width: 31%;
+    padding:0.5%;
+    margin:0.6%;
+    float: left;
+}
+
+.ss-ga-report--metric  {
+    padding:2px 0.5%;
+}
+
+.ss-ga-report--metrics-summary {
+    background-color: rgba(255,255,255,0.3);
+    padding:0.5%;
+    margin:0.6%;
+}
+
+.ss-ga-report--chart {
+    background-color:#ffffff;
+}
+
+.ss-ga-report--chart_long {
+    width: 97.8%;
+    clear: both;
+}
+
+.ss-ga-report--metrics.processing *,
+.ss-ga-report--charts.processing *,
+.ss-ga-report--metric.processing *,
+.ss-ga-report--chart.processing * {
+    display: none;
+}
+
+.ss-ga-report--metric.processing strong:after,
+.ss-ga-report--chart.processing div:after {
+    content: 'Loading...';
+    background-color: rgba(0,0,0,0.1);
+    display: inline-block !important;
+}
+
+.ss-ga-report--chart.processing div:after {
+    display: block !important;
+}
+
+#ss-ga-report--view-selector:after,
+.ss-ga-report--metrics:after,
+.ss-ga-report--charts:after,
+.ss-ga-report--metrics-summary:after {
+    content: " ";
+    visibility: hidden;
+    display: block;
+    height: 0;
+    clear: both;
+}
+
+#ss-ga-report--authenticator:empty,
+#ss-ga-report--view-selector:empty {
+    display: none;
+}
+
+.dcs-p-dcs-y {
+    z-index: 20000;
+    max-height:400px;
+    overflow: auto;
+}

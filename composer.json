@@ -1,0 +1,17 @@
+{
+	"name"        : "milkyway-multimedia/ss-external-analytics-reports",
+	"description" : "Simple analytics reports integration into Silverstripe",
+	"type"        : "silverstripe-module",
+	"keywords"    : ["Google", "Analytics", "Google Analytics", "statistics", "silverstripe", "segment.io", "reports"],
+	"license"     : "MIT",
+	"require"     : {
+		"milkyway-multimedia/ss-external-analytics"     : "dev-master",
+		"milkyway-multimedia/ss-mwm" : "dev-master"
+	},
+	"extra"       : {
+		"installer-name" : "external-analytics-reports"
+	},
+	"config"      : {
+		"process-timeout" : 600
+	}
+}

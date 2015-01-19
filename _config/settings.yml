@@ -1,0 +1,7 @@
+---
+Name: external-analytics-reports--settings
+---
+LeftAndMain:
+
+  include_requirements_from_class:
+    - Milkyway_SS_ExternalAnalytics_Reports_GoogleAnalytics
