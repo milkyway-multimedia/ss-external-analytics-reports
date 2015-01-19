@@ -23,8 +23,6 @@ class Milkyway_SS_ExternalAnalytics_Reports_GoogleAnalytics extends SS_Report {
     public function includes() {
         if(!$this->canView()) return;
 
-        \Requirements::css(SS_EXTERNAL_ANALYTICS_REPORTS_DIR . '/css/external-analytics-reports.css');
-
         if($clientId = Utilities::env_value('ApiClientId', $this, $this->config)) {
             Requirements::insertHeadTags('<script type="text/javascript">' . \ArrayData::create([
                         'ClientId' => $clientId,
@@ -37,7 +35,12 @@ class Milkyway_SS_ExternalAnalytics_Reports_GoogleAnalytics extends SS_Report {
     }
 
     public function getCMSFields() {
+        \Requirements::css(SS_EXTERNAL_ANALYTICS_REPORTS_DIR . '/css/external-analytics-reports.css');
+
+        Requirements::javascript(THIRDPARTY_DIR . '/jquery/jquery.js');
+        Requirements::javascript(THIRDPARTY_DIR . '/jquery-entwine/dist/jquery.entwine-dist.js');
         \Requirements::javascript(SS_EXTERNAL_ANALYTICS_REPORTS_DIR . '/js/external-analytics-reports.googleanalytics.js');
+
         $this->afterExtending('updateCMSFields', function($fields) {
             $fields->removeByName('ReportTitle');
         });

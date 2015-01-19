@@ -64,6 +64,11 @@
     float: left;
 }
 
+.ss-ga-report--metrics h3 {
+    padding:0.5%;
+    margin:0 0.6%;
+}
+
 .ss-ga-report--metric  {
     padding:2px 0.5%;
 }
