@@ -18,11 +18,13 @@ class SaveAccessToken extends \Controller {
         $vars = [];
 
         if (singleton('Milkyway_SS_ExternalAnalytics_Reports_GoogleAnalytics')->canView()) {
-            if($request->postVar('access_token')) {
-                file_put_contents($this->tokenLocation(), $request->postVar('access_token'));
+            if($request->postVars()) {
+                file_put_contents($this->tokenLocation(), json_encode($request->postVars()));
             }
 
-            $vars['access_token'] = $this->token();
+            $vars = $this->token();
+            if(!$vars)
+                $vars = [];
         }
 
         return $request && $request->isAjax() ? json_encode($vars) : $vars;
@@ -33,10 +35,12 @@ class SaveAccessToken extends \Controller {
     }
 
     public function token() {
-        if(file_exists($this->tokenLocation()))
-            return file_get_contents($this->tokenLocation());
+        if(file_exists($this->tokenLocation())) {
+            $token = json_decode(file_get_contents($this->tokenLocation(), true));
+            return (isset($token->expires_at) && time() > $token->expires_at) ? null : $token;
+        }
 
-        return '';
+        return null;
     }
 
     private function tokenLocation() {

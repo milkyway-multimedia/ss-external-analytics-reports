@@ -13,6 +13,8 @@ Add the following to your composer.json file
 
 ```
 
+You will also need a Client ID
+
 ## License 
 * MIT
 

@@ -349,9 +349,9 @@
                                 clientid: externalAnalytics.ga.clientId
                             };
 
-                        if(externalAnalytics.ga.accessToken) {
+                        if(externalAnalytics.ga.accessToken && externalAnalytics.ga.accessToken.access_token) {
                             authorize.serverAuth = {
-                                access_token: externalAnalytics.ga.accessToken
+                                access_token: externalAnalytics.ga.accessToken.access_token
                             };
                         }
 
@@ -361,14 +361,15 @@
                             fn();
 
                         gapi.analytics.auth.on('error', function(error) {
-
+                            console.log(error);
                         });
 
                         gapi.analytics.auth.on('success', function(response) {
                             if(response && response.access_token) {
-                                $.post(externalAnalytics.ga.accessTokenUrl, {
-                                    access_token: response.access_token
-                                });
+                                if(response['g-oauth-window'])
+                                    delete response['g-oauth-window'];
+
+                                $.post(externalAnalytics.ga.accessTokenUrl, response);
                             }
 
                             fn();

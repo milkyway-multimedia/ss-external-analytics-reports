@@ -27,7 +27,7 @@ class Milkyway_SS_ExternalAnalytics_Reports_GoogleAnalytics extends SS_Report {
             Requirements::insertHeadTags('<script type="text/javascript">' . \ArrayData::create([
                         'ClientId' => $clientId,
                         'AccountId' => Utilities::env_value('ReportsAccountId', $this, $this->config),
-                        'AccessToken' => singleton('Milkyway\SS\ExternalAnalytics\Reports\Controllers\SaveAccessToken')->token(),
+                        'AccessToken' => json_encode(singleton('Milkyway\SS\ExternalAnalytics\Reports\Controllers\SaveAccessToken')->token()),
                         'AccessTokenUrl' => singleton('Milkyway\SS\ExternalAnalytics\Reports\Controllers\SaveAccessToken')->Link(),
                     ]
             )->renderWith('IncludeJavascript_GoogleAnalytics_ForReports') . '</script>', __CLASS__ . '-script');

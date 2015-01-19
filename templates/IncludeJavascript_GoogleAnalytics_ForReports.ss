@@ -9,5 +9,5 @@ externalAnalytics.ga.accessTokenUrl = '$AccessTokenUrl';
 <% end_if %>
 
 <% if $AccessToken %>
-    externalAnalytics.ga.accessToken = '$AccessToken';
+    externalAnalytics.ga.accessToken = $AccessToken;
 <% end_if %>
