@@ -17,205 +17,27 @@
 
     $.entwine('ss', function ($) {
 
-        $('#ss-ga-report--authenticator').entwine({
+        $('.ss-ga-report').entwine({
             onmatch: function () {
                 this.initialise();
             },
             initialise: function () {
                 if (this.hasClass('ss-ga-report--initialised')) return;
 
-                this.addClass('ss-ga-report--initialised');
+                var $this = this;
+
+                $this.addClass('ss-ga-report--initialised');
 
                 gapi.analytics.ready(function () {
-                    var fn = function () {
-                            $('.ss-ga-report--metrics,.ss-ga-report--charts').removeClass('processing');
+                    var accessToken = $this.data('accessToken'),
+                        accessTokenUrl = $this.data('accessTokenUrl'),
+                        clientId = $this.data('clientId'),
+                        accountId = $this.data('accountId'),
+                        fn = function () {
+                            $this.find('.ss-ga-report--metrics,.ss-ga-report--charts').removeClass('processing');
 
-                            var statistics = [
-                                    {
-                                        'ga:users': {
-                                            container: '#ss-ga-report--metric-value--users'
-                                        },
-                                        'ga:newUsers': {
-                                            container: '#ss-ga-report--metric-value--newUsers'
-                                        },
-                                        'ga:pageviews': {
-                                            container: '#ss-ga-report--metric-value--pageviews'
-                                        },
-                                        'ga:bounceRate': {
-                                            container: '#ss-ga-report--metric-value--bounceRate',
-                                            type: 'percentage'
-                                        },
-                                        'ga:avgSessionDuration': {
-                                            container: '#ss-ga-report--metric-value--avgSessionDuration',
-                                            type: 'time'
-                                        },
-                                        'ga:pageviewsPerSession': {
-                                            container: '#ss-ga-report--metric-value--pageviewsPerSession',
-                                            type: 'int'
-                                        },
-                                        'ga:avgTimeOnPage': {
-                                            container: '#ss-ga-report--metric-value--avgTimeOnPage',
-                                            type: 'time'
-                                        },
-                                        'ga:avgPageLoadTime': {
-                                            container: '#ss-ga-report--metric-value--avgPageLoadTime',
-                                            type: 'time'
-                                        },
-                                        'ga:socialInteractions': {
-                                            container: '#ss-ga-report--metric-value--socialInteractions'
-                                        }
-                                    },
-                                    {
-                                        'ga:avgServerConnectionTime': {
-                                            container: '#ss-ga-report--metric-value--avgServerConnectionTime',
-                                            type: 'time'
-                                        },
-                                        'ga:avgServerResponseTime': {
-                                            container: '#ss-ga-report--metric-value--avgServerResponseTime',
-                                            type: 'time'
-                                        },
-                                        'ga:exceptions': {
-                                            container: '#ss-ga-report--metric-value--exceptions'
-                                        }
-                                    },
-                                    {
-                                        'ga:impressions': {
-                                            container: '#ss-ga-report--metric-value--adwords_impressions'
-                                        },
-                                        'ga:cpc': {
-                                            container: '#ss-ga-report--metric-value--adwords_cpc',
-                                            type: 'money'
-                                        },
-                                        'ga:ctr': {
-                                            container: '#ss-ga-report--metric-value--adwords_ctr',
-                                            type: 'percentage'
-                                        }
-                                    }
-                                ],
-                                charts = [
-                                    {
-                                        query: {
-                                            metrics: 'ga:sessions',
-                                            dimensions: 'ga:date'
-                                        },
-                                        chart: {
-                                            container: 'ss-ga-report--chart--traffic',
-                                            type: 'LINE'
-                                        }
-                                    },
-                                    {
-                                        query: {
-                                            metrics: 'ga:sessions',
-                                            dimensions: 'ga:mobileDeviceInfo',
-                                            segment: 'gaid::-14',
-                                            'max-results': 5
-                                        },
-                                        chart: {
-                                            container: 'ss-ga-report--chart--mobile',
-                                            type: 'PIE'
-                                        }
-                                    },
-                                    {
-                                        query: {
-                                            metrics: 'ga:sessions',
-                                            dimensions: 'ga:country',
-                                            sort: '-ga:sessions'
-                                        },
-                                        chart: {
-                                            container: 'ss-ga-report--chart--countries',
-                                            type: 'GEO'
-                                        }
-                                    },
-                                    {
-                                        query: {
-                                            metrics: 'ga:pageviews',
-                                            dimensions: 'ga:browser',
-                                            sort: '-ga:pageviews',
-                                            'max-results': 5
-                                        },
-                                        chart: {
-                                            container: 'ss-ga-report--chart--browser',
-                                            type: 'PIE'
-                                        }
-                                    },
-                                    {
-                                        query: {
-                                            dimensions: 'ga:medium',
-                                            metrics: 'ga:sessions',
-                                            sort: '-ga:sessions'
-                                        },
-                                        chart: {
-                                            container: 'ss-ga-report--chart--trafficSources',
-                                            type: 'PIE'
-                                        }
-                                    },
-                                    {
-                                        query: {
-                                            dimensions: 'ga:userType',
-                                            metrics: 'ga:sessions'
-                                        },
-                                        chart: {
-                                            container: 'ss-ga-report--chart--loyalty',
-                                            type: 'PIE'
-                                        }
-                                    },
-                                    {
-                                        query: {
-                                            dimensions: 'ga:dayOfWeekName',
-                                            metrics: 'ga:users'
-                                        },
-                                        chart: {
-                                            container: 'ss-ga-report--chart--weekly',
-                                            type: 'LINE'
-                                        }
-                                    },
-                                    {
-                                        query: {
-                                            dimensions: 'ga:pagePath',
-                                            metrics: 'ga:pageviews,ga:uniquePageviews,ga:timeOnPage,ga:bounces,ga:entrances,ga:exits',
-                                            sort: '-ga:pageviews',
-                                            'max-results': 5
-                                        },
-                                        chart: {
-                                            container: 'ss-ga-report--chart--topContent',
-                                            type: 'TABLE'
-                                        }
-                                    },
-                                    {
-                                        query: {
-                                            dimensions: 'ga:keyword',
-                                            metrics: 'ga:sessions',
-                                            sort: '-ga:sessions',
-                                            'max-results': 5
-                                        },
-                                        chart: {
-                                            container: 'ss-ga-report--chart--topKeywords',
-                                            type: 'TABLE'
-                                        }
-                                    },
-                                    {
-                                        query: {
-                                            dimensions: 'ga:channelGrouping',
-                                            metrics: 'ga:sessions',
-                                            sort: '-ga:sessions'
-                                        },
-                                        chart: {
-                                            container: 'ss-ga-report--chart--topChannels',
-                                            type: 'PIE'
-                                        }
-                                    },
-                                    {
-                                        query: {
-                                            dimensions: 'ga:dayOfWeekName',
-                                            metrics: 'ga:sessions',
-                                            filters: 'ga:hasSocialSourceReferral==Yes'
-                                        },
-                                        chart: {
-                                            container: 'ss-ga-report--chart--visitsViaSocial',
-                                            type: 'LINE'
-                                        }
-                                    }
-                                ],
+                            var statistics = $this.data('metrics'),
+                                charts = $this.data('charts'),
                                 statOptions = {
                                     query: {}
                                 },
@@ -229,11 +51,11 @@
                                     }
                                 },
                                 timeout = 0,
-                                timeoutLimit = 750,
+                                timeoutLimit = 1000,
                                 saved = [];
 
-                            if (externalAnalytics.ga.accountId) {
-                                statOptions.query.ids = chartOptions.query.ids = ['ga:' + externalAnalytics.ga.accountId];
+                            if (accountId) {
+                                statOptions.query.ids = chartOptions.query.ids = ['ga:' + accountId];
                             }
 
                             for (var stats_i = 0; stats_i < statistics.length; stats_i++) {
@@ -267,7 +89,7 @@
                                                             response.totalsForAllResults[metric] = '$' + response.totalsForAllResults[metric];
                                                         }
                                                         else if (stats[metric].type == 'time') {
-                                                            response.totalsForAllResults[metric] = Math.round(parseFloat(response.totalsForAllResults[metric]));
+                                                            response.totalsForAllResults[metric] = parseFloat(response.totalsForAllResults[metric]).toFixed(2);
                                                             response.totalsForAllResults[metric] = response.totalsForAllResults[metric] + ' seconds';
                                                         }
                                                         else if (stats[metric].type == 'int') {
@@ -285,6 +107,7 @@
 
                                 (function (stats_fn, report) {
                                     report.on('error', function (response) {
+                                        console.log(response);
                                         if (response && response.hasOwnProperty('error') && response.error.hasOwnProperty('code') && response.error.code == 403) {
                                             timeout = 1;
                                             stats_fn(report);
@@ -297,7 +120,7 @@
                                     item: report
                                 });
 
-                                if (externalAnalytics.ga.accountId)
+                                if (accountId)
                                     stats_fn(report);
                             }
 
@@ -325,11 +148,11 @@
                                     item: chart
                                 });
 
-                                if (externalAnalytics.ga.accountId)
+                                if (accountId)
                                     charts_fn(chart);
                             }
 
-                            if (!externalAnalytics.ga.accountId) {
+                            if (!accountId) {
                                 var selector = new gapi.analytics.ViewSelector({
                                     container: 'ss-ga-report--view-selector'
                                 });
@@ -353,12 +176,12 @@
                         },
                         authorize = {
                             container: 'ss-ga-report--authenticator',
-                            clientid: externalAnalytics.ga.clientId
+                            clientid: clientId
                         };
 
-                    if (externalAnalytics.ga.accessToken && externalAnalytics.ga.accessToken.access_token) {
+                    if (accessToken && accessToken.access_token) {
                         authorize.serverAuth = {
-                            access_token: externalAnalytics.ga.accessToken.access_token
+                            access_token: accessToken.access_token
                         };
                     }
 
@@ -368,7 +191,6 @@
                         fn();
 
                     gapi.analytics.auth.on('error', function (error) {
-                        console.log(error);
                     });
 
                     gapi.analytics.auth.on('success', function (response) {
@@ -376,7 +198,7 @@
                             if (response['g-oauth-window'])
                                 delete response['g-oauth-window'];
 
-                            $.post(externalAnalytics.ga.accessTokenUrl, response);
+                            $.post(accessTokenUrl, response);
                         }
 
                         fn();

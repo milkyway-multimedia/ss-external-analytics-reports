@@ -19,8 +19,11 @@ class Metric extends ViewableData {
 
     protected $id;
 
-    public function __construct($metric, $title = '', $options = [], $id = '') {
+    public $batch = null;
+
+    public function __construct($metric, $title = '', $options = [], $id = '', $batch = null) {
         $this->metric = $metric;
+        $this->batch = $batch;
 
         if($id) {
             $this->id = $id;
@@ -41,25 +44,17 @@ class Metric extends ViewableData {
         ], $options);
     }
 
-    public function i18n_title() {
-        return _t('ExternalAnalytics.Reports.Metric.' . $this->id, $this->title);
+    public function getTitle() {
+        return _t('ExternalAnalytics.Reports.Metric.' . $this->id, ucfirst($this->title));
+    }
+
+    public function getID() {
+        return $this->id;
     }
 
     public function json() {
         return [
             $this->metric => $this->options,
         ];
-    }
-
-    public function forTemplate() {
-        $vars = [
-            'Title' => $this->i18n_title(),
-            'ID' => $this->id,
-        ];
-
-        return str_replace(array_keys($vars), $vars,'
-        <div class="ss-ga-report--metric processing">
-            $Title <strong class="ss-ga-report--metric-value" id="ss-ga-report--metric-value--$ID"></strong>
-        </div>');
     }
 } 

@@ -1,48 +1,60 @@
 ---
 Name: external-analytics-reports--settings
 ---
-LeftAndMain:
-  include_requirements_from_class:
-    - Milkyway_SS_ExternalAnalytics_Reports_GoogleAnalytics_Report
-
 Milkyway_SS_ExternalAnalytics_Reports_GoogleAnalytics_Report:
   metrics:
     'At a glance':
       - metric: 'ga:users'
+        batch: 1
       - metric: 'ga:newUsers'
+        batch: 1
       - metric: 'ga:pageviews'
+        batch: 1
       - metric: 'ga:bounceRate'
+        batch: 1
         options:
           type: 'percentage'
       - metric: 'ga:avgSessionDuration'
+        batch: 1
         options:
           type: 'time'
       - metric: 'ga:pageviewsPerSession'
+        batch: 1
         options:
           type: 'int'
       - metric: 'ga:avgTimeOnPage'
+        batch: 1
         options:
           type: 'time'
       - metric: 'ga:avgPageLoadTime'
+        batch: 1
         options:
           type: 'time'
       - metric: 'ga:socialInteractions'
+        batch: 1
       - metric: 'ga:socialActivities'
+        batch: 2
       - metric: 'ga:avgServerConnectionTime'
+        batch: 2
         options:
           type: 'time'
       - metric: 'ga:avgServerResponseTime'
+        batch: 2
         options:
           type: 'time'
       - metric: 'ga:exceptions'
+        batch: 2
         title: 'Site Errors'
     'Google Adwords':
       - metric: 'ga:impressions'
+        batch: 3
       - metric: 'ga:cpc'
+        batch: 3
         title: 'Cost per Click'
         options:
           type: 'money'
       - metric: 'ga:ctr'
+        batch: 3
         title: 'Click Through Rating'
         options:
           type: 'percentage'
@@ -105,9 +117,10 @@ Milkyway_SS_ExternalAnalytics_Reports_GoogleAnalytics_Report:
     topContent:
       title: 'Top Content'
       query:
-        metrics: 'ga:pageviews,ga:uniquePageviews,ga:timeOnPage,ga:bounces,ga:entrances,ga:exits'
+        metrics: 'ga:pageviews,ga:uniquePageviews,ga:timeOnPage,ga:bounceRate,ga:entrances,ga:exits'
         dimensions: 'ga:pagePath'
         sort: '-ga:pageviews'
+        'max-results': 5
 
     topKeywords:
       title: 'Top Keywords'
@@ -115,6 +128,7 @@ Milkyway_SS_ExternalAnalytics_Reports_GoogleAnalytics_Report:
         metrics: 'ga:sessions'
         dimensions: 'ga:keyword'
         sort: '-ga:sessions'
+        'max-results': 5
 
     loyalty:
       title: 'New vs. Returning Visitors'
@@ -141,3 +155,12 @@ Milkyway_SS_ExternalAnalytics_Reports_GoogleAnalytics_Report:
         filters: 'ga:hasSocialSourceReferral==Yes'
       chart:
         type: 'LINE'
+
+    topReferrers:
+      title: 'Top Referrers'
+      query:
+        metrics: 'ga:users,ga:pageviews,ga:bounceRate'
+        dimensions: 'ga:fullReferrer'
+        sort: '-ga:users'
+        filters: 'ga:medium==referral'
+        'max-results': 5

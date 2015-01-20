@@ -37,12 +37,20 @@ class Chart extends ViewableData {
         }
 
         $this->chart = array_merge($this->chart, [
-            'container' => '#ss-ga-report--chart--' . $this->id,
+            'container' => 'ss-ga-report--chart--' . $this->id,
         ], $chart);
     }
 
-    public function i18n_title() {
-        return _t('ExternalAnalytics.Reports.Chart.' . $this->id, $this->title);
+    public function getTitle() {
+        return _t('ExternalAnalytics.Reports.Chart.' . $this->id, ucfirst($this->title));
+    }
+
+    public function getID() {
+        return $this->id;
+    }
+
+    public function getType() {
+        return isset($this->chart['type']) ? $this->chart['type'] : '';
     }
 
     public function json() {
@@ -50,18 +58,5 @@ class Chart extends ViewableData {
             'query' => $this->query,
             'chart' => $this->chart,
         ];
-    }
-
-    public function forTemplate() {
-        $vars = [
-            'Title' => $this->i18n_title(),
-            'ID' => $this->id,
-        ];
-
-        return str_replace(array_keys($vars), $vars,'
-        <div class="ss-ga-report--chart processing">
-            <h3>$Title</h3>
-            <div id="ss-ga-report--chart--$ID"></div>
-        </div>');
     }
 } 

@@ -13,7 +13,12 @@ Add the following to your composer.json file
 
 ```
 
-You will also need a Client ID
+You will also need a Client ID to use with the Google API and Oauth 2.0 Client.
+
+[More information can be found here](https://developers.google.com/accounts/docs/OAuth2)
+
+## TODO
+* Add a date range slider/adjuster
 
 ## License 
 * MIT
