@@ -10,7 +10,7 @@
 use \Milkyway\SS\ExternalAnalytics\Config\Contract as Config;
 use \Milkyway\SS\ExternalAnalytics\Utilities as Utilities;
 
-class Milkyway_SS_ExternalAnalytics_Reports_GoogleAnalytics extends SS_Report {
+class Milkyway_SS_ExternalAnalytics_Reports_GoogleAnalytics_Report extends SS_Report {
     protected $title = 'Google Analytics';
 
     protected $config;

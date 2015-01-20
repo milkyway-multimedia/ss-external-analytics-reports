@@ -1,4 +1,4 @@
-<?php namespace Milkyway\SS\ExternalAnalytics\Reports\Controllers;
+<?php namespace Milkyway\SS\ExternalAnalytics\Reports\GoogleAnalytics\Controllers;
 /**
  * Milkyway Multimedia
  * SaveAccessToken.php
@@ -10,6 +10,8 @@
 use Milkyway\SS\Director;
 
 class SaveAccessToken extends \Controller {
+    protected $reportClass = 'Milkyway_SS_ExternalAnalytics_Reports_GoogleAnalytics_Report';
+
     public function index(\SS_HTTPRequest $request)
     {
         if ($this->Response)
@@ -17,7 +19,7 @@ class SaveAccessToken extends \Controller {
 
         $vars = [];
 
-        if (singleton('Milkyway_SS_ExternalAnalytics_Reports_GoogleAnalytics')->canView()) {
+        if (singleton($this->reportClass)->canView()) {
             if($request->postVars()) {
                 file_put_contents($this->tokenLocation(), json_encode($request->postVars()));
             }

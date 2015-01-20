@@ -2,6 +2,142 @@
 Name: external-analytics-reports--settings
 ---
 LeftAndMain:
-
   include_requirements_from_class:
-    - Milkyway_SS_ExternalAnalytics_Reports_GoogleAnalytics
+    - Milkyway_SS_ExternalAnalytics_Reports_GoogleAnalytics_Report
+
+Milkyway_SS_ExternalAnalytics_Reports_GoogleAnalytics_Report:
+  metrics:
+    'At a glance':
+      - metric: 'ga:users'
+      - metric: 'ga:newUsers'
+      - metric: 'ga:pageviews'
+      - metric: 'ga:bounceRate'
+        options:
+          type: 'percentage'
+      - metric: 'ga:avgSessionDuration'
+        options:
+          type: 'time'
+      - metric: 'ga:pageviewsPerSession'
+        options:
+          type: 'int'
+      - metric: 'ga:avgTimeOnPage'
+        options:
+          type: 'time'
+      - metric: 'ga:avgPageLoadTime'
+        options:
+          type: 'time'
+      - metric: 'ga:socialInteractions'
+      - metric: 'ga:socialActivities'
+      - metric: 'ga:avgServerConnectionTime'
+        options:
+          type: 'time'
+      - metric: 'ga:avgServerResponseTime'
+        options:
+          type: 'time'
+      - metric: 'ga:exceptions'
+        title: 'Site Errors'
+    'Google Adwords':
+      - metric: 'ga:impressions'
+      - metric: 'ga:cpc'
+        title: 'Cost per Click'
+        options:
+          type: 'money'
+      - metric: 'ga:ctr'
+        title: 'Click Through Rating'
+        options:
+          type: 'percentage'
+
+  charts:
+    traffic:
+      title: 'Site Traffic'
+      query:
+        metrics: 'ga:sessions'
+        dimensions: 'ga:date'
+      chart:
+        type: 'LINE'
+
+    mobile:
+      title: 'Mobile Traffic'
+      query:
+        metrics: 'ga:sessions'
+        dimensions: 'ga:mobileDeviceInfo'
+        segment: 'gaid::-14'
+        'max-results': 5
+      chart:
+        type: 'PIE'
+
+    weekly:
+      title: 'Weekly Traffic'
+      query:
+        metrics: 'ga:users'
+        dimensions: 'ga:dayOfWeekName'
+      chart:
+        type: 'LINE'
+
+    countries:
+      title: 'Users by Country'
+      query:
+        metrics: 'ga:sessions'
+        dimensions: 'ga:country'
+        sort: '-ga:sessions'
+      chart:
+        type: 'GEO'
+
+    browser:
+      title: 'Pageviews by Browser'
+      query:
+        metrics: 'ga:pageviews'
+        dimensions: 'ga:browser'
+        sort: '-ga:pageviews'
+        'max-results': 5
+      chart:
+        type: 'PIE'
+
+    trafficSources:
+      title: 'Traffic Sources'
+      query:
+        metrics: 'ga:sessions'
+        dimensions: 'ga:medium'
+        sort: '-ga:sessions'
+      chart:
+        type: 'PIE'
+
+    topContent:
+      title: 'Top Content'
+      query:
+        metrics: 'ga:pageviews,ga:uniquePageviews,ga:timeOnPage,ga:bounces,ga:entrances,ga:exits'
+        dimensions: 'ga:pagePath'
+        sort: '-ga:pageviews'
+
+    topKeywords:
+      title: 'Top Keywords'
+      query:
+        metrics: 'ga:sessions'
+        dimensions: 'ga:keyword'
+        sort: '-ga:sessions'
+
+    loyalty:
+      title: 'New vs. Returning Visitors'
+      query:
+        metrics: 'ga:sessions'
+        dimensions: 'ga:userType'
+      chart:
+        type: 'PIE'
+
+    topChannels:
+      title: 'Top Channels'
+      query:
+        metrics: 'ga:sessions'
+        dimensions: 'ga:channelGrouping'
+        sort: '-ga:sessions'
+      chart:
+        type: 'PIE'
+
+    visitsViaSocial:
+      title: 'Visits via Social Media'
+      query:
+        metrics: 'ga:sessions'
+        dimensions: 'ga:dayOfWeekName'
+        filters: 'ga:hasSocialSourceReferral==Yes'
+      chart:
+        type: 'LINE'

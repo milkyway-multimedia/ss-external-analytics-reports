@@ -3,4 +3,4 @@ Name: google-analytics--routes
 ---
 Director:
   rules:
-    '__ga_saveToken': 'Milkyway\SS\ExternalAnalytics\Reports\Controllers\SaveAccessToken'
+    '__ga_saveToken': 'Milkyway\SS\ExternalAnalytics\Reports\GoogleAnalytics\Controllers\SaveAccessToken'

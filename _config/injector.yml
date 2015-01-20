@@ -3,6 +3,6 @@ Name: external-analytics-reports--injector
 ---
 Injector:
 
-  'Milkyway_SS_ExternalAnalytics_Reports_GoogleAnalytics':
+  'Milkyway_SS_ExternalAnalytics_Reports_GoogleAnalytics_Report':
     constructor:
       0: '%$Milkyway\SS\ExternalAnalytics\Config\GoogleAnalytics'
