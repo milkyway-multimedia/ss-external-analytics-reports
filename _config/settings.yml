@@ -44,7 +44,12 @@ Milkyway_SS_ExternalAnalytics_Reports_GoogleAnalytics_Report:
           type: 'time'
       - metric: 'ga:exceptions'
         batch: 2
+        title: 'Site Exceptions'
+      - metric: 'ga:fatalExceptions'
+        batch: 2
         title: 'Site Errors'
+      - metric: 'ga:organicSearches'
+        batch: 2
     'Google Adwords':
       - metric: 'ga:impressions'
         batch: 3
@@ -56,6 +61,20 @@ Milkyway_SS_ExternalAnalytics_Reports_GoogleAnalytics_Report:
       - metric: 'ga:ctr'
         batch: 3
         title: 'Click Through Rating'
+        options:
+          type: 'percentage'
+    'Goals':
+      - metric: 'ga:goalStartsAll'
+        title: 'No. of Goals'
+        batch: 3
+      - metric: 'ga:goalConversionRateAll'
+        title: 'Goal Conversion Rate'
+        batch: 3
+        options:
+          type: 'percentage'
+      - metric: 'ga:goalAbandonRateAll'
+        batch: 3
+        title: 'Abandonment Rate'
         options:
           type: 'percentage'
 

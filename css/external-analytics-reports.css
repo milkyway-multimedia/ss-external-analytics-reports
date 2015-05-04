@@ -123,8 +123,15 @@
     display: none;
 }
 
+.dcs-p-dcs-x,
 .dcs-p-dcs-y {
     z-index: 20000;
     max-height:400px;
     overflow: auto;
+}
+
+.ss-ga-report--chart .gapi-analytics-data-chart .google-visualization-table-td-bool,
+.ss-ga-report--chart .gapi-analytics-data-chart .google-visualization-table-td-center,
+.ss-ga-report--chart .gapi-analytics-data-chart .google-visualization-table-td-number {
+    text-align: left;
 }

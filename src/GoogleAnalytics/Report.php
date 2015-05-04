@@ -7,20 +7,14 @@
  * @author Mellisa Hankins <mell@milkywaymultimedia.com.au>
  */
 
-use \Milkyway\SS\ExternalAnalytics\Config\Contract as Config;
-use \Milkyway\SS\ExternalAnalytics\Utilities as Utilities;
+use Milkyway\SS\ExternalAnalytics\Drivers\GoogleAnalytics\Driver;
 use \Milkyway\SS\ExternalAnalytics\Reports\GoogleAnalytics\Components\Chart as Chart;
 use \Milkyway\SS\ExternalAnalytics\Reports\GoogleAnalytics\Components\Metric as Metric;
 
 class Milkyway_SS_ExternalAnalytics_Reports_GoogleAnalytics_Report extends SS_Report {
     protected $title = 'Google Analytics';
 
-    protected $config;
-
-    public function __construct(Config $config = null) {
-        $this->config = $config;
-        parent::__construct();
-    }
+    protected $driver;
 
     public function getCMSFields() {
         $this->afterExtending('updateCMSFields', function($fields) {
@@ -45,7 +39,7 @@ class Milkyway_SS_ExternalAnalytics_Reports_GoogleAnalytics_Report extends SS_Re
     }
 
     public function canView($member = null) {
-        return Utilities::env_value('ApiClientId', $this, $this->config) !== null;
+        return $this->apiClientId() !== null;
     }
 
     public function getAttributesHTML() {
@@ -54,10 +48,10 @@ class Milkyway_SS_ExternalAnalytics_Reports_GoogleAnalytics_Report extends SS_Re
             'data-access-token-url' => singleton('Milkyway\SS\ExternalAnalytics\Reports\GoogleAnalytics\Controllers\SaveAccessToken')->Link(),
         ];
 
-        if($clientId = Utilities::env_value('ApiClientId', $this, $this->config))
+        if($clientId = $this->apiClientId())
             $attributes['data-client-id'] = $clientId;
 
-        if($accountId = Utilities::env_value('ReportsAccountId', $this, $this->config))
+        if($accountId = $this->accountId())
             $attributes['data-account-id'] = $accountId;
 
         if(($list = $this->Metrics()) && $list->exists()) {
@@ -131,5 +125,41 @@ class Milkyway_SS_ExternalAnalytics_Reports_GoogleAnalytics_Report extends SS_Re
             isset($metric['id']) ? $metric['id'] : '',
             isset($metric['batch']) ? $metric['batch'] : null
         );
+    }
+
+    protected function driver() {
+        if($this->driver === null) {
+            $idToUse = $this->defaultDriverId();
+            $driverToUse = false;
+
+            singleton('ea')->executeDrivers(function($driver, $id) use(&$driverToUse, $idToUse) {
+                if($driverToUse !== false) return;
+
+                if((!$idToUse && $driver instanceof Driver) || ($idToUse && $id == $idToUse))
+                    $driverToUse = $driver;
+            });
+
+            $this->driver = $driverToUse;
+        }
+
+        return $this->driver;
+    }
+
+    protected function defaultDriverId() {
+        return singleton('env')->get('GoogleAnalytics|Google|SiteConfig.ga_default_driver', null, [
+            'objects' => [$this]
+        ]);
+    }
+
+    protected function apiClientId() {
+        return singleton('env')->get('GoogleAnalytics|Google|SiteConfig.ga_api_client_id', null, [
+            'objects' => [$this]
+        ]);
+    }
+
+    protected function accountId() {
+        return singleton('env')->get('GoogleAnalytics|Google|SiteConfig.ga_reports_account_id', null, [
+            'objects' => [$this]
+        ]);
     }
 } 
