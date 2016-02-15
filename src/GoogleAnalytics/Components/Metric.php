@@ -57,4 +57,4 @@ class Metric extends ViewableData {
             $this->metric => $this->options,
         ];
     }
-} 
+}

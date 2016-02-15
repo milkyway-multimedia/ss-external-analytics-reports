@@ -59,4 +59,4 @@ class Chart extends ViewableData {
             'chart' => $this->chart,
         ];
     }
-} 
+}
