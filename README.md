@@ -20,10 +20,10 @@ You will also need a Client ID to use with the Google API and Oauth 2.0 Client.
 ## TODO
 * Add a date range slider/adjuster
 
-## License 
+## License
 * MIT
 
-## Version 
+## Version
 * Version 0.1 - Alpha
 
 ## Contact

@@ -48,4 +48,4 @@ class SaveAccessToken extends \Controller {
     private function tokenLocation() {
         return TEMP_FOLDER . DIRECTORY_SEPARATOR . '.' . str_replace('\\', '_', __CLASS__) . '_token';
     }
-} 
+}

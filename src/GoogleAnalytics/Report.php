@@ -162,4 +162,4 @@ class Milkyway_SS_ExternalAnalytics_Reports_GoogleAnalytics_Report extends SS_Re
             'objects' => [$this]
         ]);
     }
-} 
+}
